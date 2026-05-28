@@ -3,21 +3,18 @@ package br.com.fiap.produtos.Model;
 import java.util.Objects;
 
 public class Categoria {
-
     private Long id;
-
     private String nome;
-
 
     public Categoria() {
     }
 
-    public Categoria(String nome, Long id) {
-        this.setId(id);
+    public Categoria(String nome) {
         this.setNome(nome);
     }
 
-    public Categoria(String nome) {
+    public Categoria(Long id, String nome) {
+        this.setId(id);
         this.setNome(nome);
     }
 
@@ -26,16 +23,23 @@ public class Categoria {
         return id;
     }
 
-    public void setId(Long id) {
+    public Categoria setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getNome() {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public Categoria setNome(String nome) {
         this.nome = nome;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return getNome().toUpperCase();
     }
 
     @Override
@@ -43,16 +47,11 @@ public class Categoria {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Categoria categoria = (Categoria) o;
-        return Objects.equals(nome, categoria.nome);
+        return Objects.equals(getNome(), categoria.getNome());
     }
-
     @Override
     public int hashCode() {
-        return Objects.hashCode(nome);
+        return Objects.hash(getNome());
     }
 
-    @Override
-    public String toString() {
-        return nome.toUpperCase();
-    }
 }

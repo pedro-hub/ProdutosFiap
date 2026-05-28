@@ -2,53 +2,55 @@ package br.com.fiap.produtos.repository;
 
 import br.com.fiap.produtos.Model.Categoria;
 
-import javax.swing.*;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 
 public class CategoriaCollectionRepository {
 
-
     private static List<Categoria> categorias;
 
     static {
+
         categorias = new Vector<>();
+        String[] categorias = {
+                "Eletrônicos",
+                "Celulares",
+                "Livros",
+                "Games"};
 
-        Categoria eletronicos = new Categoria("Eletronicos");
-        Categoria celulares = new Categoria("Celulares");
-        Categoria livros = new Categoria("Livros");
+        Arrays.asList(categorias)
+                .forEach(CategoriaCollectionRepository::save);
+    }
 
-        categorias.add(eletronicos);
-        categorias.add(celulares);
-        categorias.add(livros);
-
+    public static Categoria save(String s) {
+        Categoria c = new Categoria(s);
+        if (!categorias.contains(c)) {
+            c.setId((long) categorias.size() + 1);
+            categorias.add(c);
+            return c;
+        } else {
+            return null;
+        }
     }
 
     public static List<Categoria> findAll() {
         return categorias;
     }
 
-    public static Categoria findById(long id) {
+    public static Categoria findById(Long id) {
         return categorias.stream()
-                .filter(c -> c.getId()
-                        .equals(id)).findFirst()
+                .filter(c -> c.getId().equals(id))
+                .findFirst()
                 .orElse(null);
-    }
-
-    public static List<Categoria> findByNome(String nome) {
-        return categorias.stream()
-                .filter(c -> c.getNome()
-                        .equalsIgnoreCase(nome))
-                .toList();
     }
 
     public static Categoria save(Categoria categoria) {
         if (!categorias.contains(categoria)) {
-            categoria.setId((long)categorias.size() + 1);
+            categoria.setId((long) categorias.size() + 1);
             categorias.add(categoria);
             return categoria;
         } else {
-            JOptionPane.showMessageDialog(null, "Categoria já existe!");
             return null;
         }
     }
